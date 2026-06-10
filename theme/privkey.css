@@ -1,0 +1,142 @@
+/* PrivKey docs theme — matches privkey.io and the Keep app brand.
+   Dark GitHub-family background, green accent (#27ae60), Space Grotesk
+   headings, Inter body. Injected into every project's mdBook by build.py. */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+/* ---- Palette (override the navy theme) ---- */
+.navy {
+  --bg: #0d1117;
+  --fg: #e7ebf2;
+
+  --sidebar-bg: #0a0d12;
+  --sidebar-fg: #c4ccd6;
+  --sidebar-non-existant: #5b6573;
+  --sidebar-active: #27ae60;
+  --sidebar-spacer: #1c222c;
+
+  --scrollbar: #30363d;
+
+  --icons: #8a94a3;
+  --icons-hover: #e7ebf2;
+
+  --links: #3ad07f;
+
+  --inline-code-color: #e3b341;
+
+  --theme-popup-bg: #161b22;
+  --theme-popup-border: #262e3a;
+  --theme-hover: #1d232d;
+
+  --quote-bg: #121821;
+  --quote-border: #27ae60;
+
+  --warning-border: #e3b341;
+
+  --table-border-color: #262e3a;
+  --table-header-bg: #161b22;
+  --table-alternate-bg: #0f141b;
+
+  --searchbar-border-color: #30363d;
+  --searchbar-bg: #161b22;
+  --searchbar-fg: #e7ebf2;
+  --searchbar-shadow-color: #27ae60;
+  --searchresults-header-fg: #8a94a3;
+  --searchresults-border-color: #262e3a;
+  --searchresults-li-bg: #131820;
+  --search-mark-bg: #2f8f5b;
+}
+
+/* Subtle brand glow behind the page, like the Keep app. */
+.navy {
+  background:
+    radial-gradient(1100px 520px at 50% -12%, #11241a 0%, transparent 60%),
+    var(--bg);
+}
+
+/* ---- Brand logo (injected into the sidebar by privkey.js) ----
+   The TOC scrollbox is absolutely positioned over the whole sidebar, so the
+   logo is pinned to the top and the scrollbox is pushed down to make room. */
+.pk-brand {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  height: 74px;
+  padding: 0 1rem;
+  background: var(--sidebar-bg);
+  border-bottom: 1px solid var(--sidebar-spacer);
+  text-decoration: none;
+}
+.pk-brand img {
+  max-height: 44px;
+  width: auto;
+  height: auto;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+}
+.pk-name {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+/* Reserve the brand header's height at the top of the scrolling TOC. */
+.sidebar-scrollbox {
+  top: 75px !important;
+}
+
+/* ---- Typography ---- */
+html {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.menu-title {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+.content h1 {
+  font-weight: 700;
+}
+.content h2 {
+  font-weight: 600;
+  border-bottom: 1px solid var(--quote-bg);
+  padding-bottom: 0.3rem;
+}
+
+a.header:hover {
+  color: #3ad07f;
+}
+
+/* Inline code: readable on dark. */
+.content code {
+  background: #161b22;
+  border: 1px solid #20262f;
+  border-radius: 6px;
+  padding: 0.05em 0.35em;
+}
+
+/* Code blocks: match panel surfaces. */
+.content pre > code {
+  border: 1px solid #1f2630;
+  border-radius: 10px;
+}
+
+/* Tables: rounded, panel-toned. */
+.content table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+.content table thead th {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-weight: 600;
+}

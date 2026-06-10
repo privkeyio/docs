@@ -1,0 +1,67 @@
+# Builds the docs.privkey.io portal (build.py clones each project in
+# projects.json and builds its mdBook) and deploys to GitHub Pages.
+# First-party Pages actions only: no tokens, projects are public clones.
+#
+# One-time setup:
+#   1. Repo Settings > Pages > Build and deployment > Source: "GitHub Actions".
+#   2. DNS: CNAME  docs.privkey.io -> privkeyio.github.io
+# The CNAME file written by build.py pins the custom domain on every deploy.
+#
+# Rebuild triggers: pushes here, a daily cron (picks up project doc changes),
+# manual dispatch, and a repository_dispatch a project can send when its docs
+# change (optional, for instant updates).
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '17 6 * * *'
+  repository_dispatch:
+    types: [docs-updated]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  MDBOOK_VERSION: '0.5.3'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install mdBook
+        run: |
+          set -euo pipefail
+          url="https://github.com/rust-lang/mdBook/releases/download/v${MDBOOK_VERSION}/mdbook-v${MDBOOK_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+          mkdir -p "$HOME/.local/bin"
+          curl -sSL "$url" | tar -xz -C "$HOME/.local/bin"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Build portal
+        run: python3 build.py
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

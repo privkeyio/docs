@@ -1,0 +1,13 @@
+{
+  "projects": [
+    {
+      "name": "keep",
+      "repo": "https://github.com/privkeyio/keep",
+      "ref": "docs/mdbook-site",
+      "path": ".",
+      "title": "Keep",
+      "description": "Self-custodial key management for Nostr and Bitcoin.",
+      "icon": "keep.png"
+    }
+  ]
+}
