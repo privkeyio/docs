@@ -50,8 +50,14 @@ def build_project(p):
     # Patch book.toml: drop any existing site-url/additional-* then set ours,
     # mounting the book at /<name>/ and wiring in the shared theme.
     text = book_toml.read_text()
-    text = re.sub(r"(?m)^\s*(site-url|additional-css|additional-js)\s*=.*\n", "", text)
+    text = re.sub(
+        r"(?m)^\s*(site-url|additional-css|additional-js|default-theme|preferred-dark-theme)\s*=.*\n",
+        "",
+        text,
+    )
     inject = (
+        'default-theme = "navy"\n'
+        'preferred-dark-theme = "navy"\n'
         'additional-css = ["_theme/privkey.css"]\n'
         'additional-js = ["_theme/privkey.js"]\n'
         f'site-url = "/{name}/"\n'
