@@ -8,6 +8,15 @@
       "title": "Keep",
       "description": "Self-custodial key management for Nostr and Bitcoin.",
       "icon": "keep.png"
+    },
+    {
+      "name": "readstr",
+      "repo": "https://github.com/privkeyio/readstr",
+      "ref": "main",
+      "path": ".",
+      "title": "Readstr",
+      "description": "Google Reader-style aggregator for RSS feeds and Nostr long-form content.",
+      "icon": "readstr.png"
     }
   ]
 }
