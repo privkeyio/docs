@@ -38,14 +38,11 @@ def build_project(p):
         print(f"!! {name}: no book.toml (ref {ref}), skipping")
         return False
 
-    # Inject the shared theme into the clone. The sidebar logo is per-project:
-    # a project's own icon if it has one, else the PrivKey logo.
-    logo_url = f"/{name}/brand-logo.png" if p.get("icon") else "/brand-icon.png"
+    # Inject the shared theme into the clone.
     tdir = bookdir / "_theme"
     tdir.mkdir(exist_ok=True)
     shutil.copy(THEME / "privkey.css", tdir / "privkey.css")
-    js = (THEME / "privkey.js").read_text().replace("__PK_LOGO_URL__", logo_url)
-    (tdir / "privkey.js").write_text(js)
+    shutil.copy(THEME / "privkey.js", tdir / "privkey.js")
 
     # Patch book.toml: drop any existing site-url/additional-* then set ours,
     # mounting the book at /<name>/ and wiring in the shared theme.
@@ -75,15 +72,17 @@ def build_project(p):
         shutil.rmtree(target)
     shutil.copytree(bookdir / "book", target)
 
+    # Every project gets a brand-logo.png at its own root (its own icon if it
+    # has one, else the PrivKey mark), referenced relatively by privkey.js.
     icon = p.get("icon")
-    if icon:
-        shutil.copy(ROOT / "assets" / "icons" / icon, target / "brand-logo.png")
+    logo = ROOT / "assets" / "icons" / icon if icon else LOGO
+    shutil.copy(logo, target / "brand-logo.png")
     return True
 
 
 def write_landing(projects):
     cards = "\n".join(
-        f'    <a class="card" href="/{p["name"]}/">'
+        f'    <a class="card" href="{p["name"]}/">'
         f'<h2>{p.get("title", p["name"])}</h2>'
         f'<p>{p.get("description", "")}</p></a>'
         for p in projects
@@ -113,7 +112,7 @@ LANDING = """<!DOCTYPE html>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PrivKey Docs</title>
-<link rel="icon" type="image/png" href="/brand-icon.png" />
+<link rel="icon" type="image/png" href="brand-icon.png" />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   :root { color-scheme: dark; }
@@ -151,7 +150,7 @@ LANDING = """<!DOCTYPE html>
 <body>
   <main class="wrap">
     <div class="brand">
-      <img src="/brand-icon.png" alt="PrivKey" />
+      <img src="brand-icon.png" alt="PrivKey" />
       <span>PrivKey</span>
     </div>
     <p class="lede">Documentation for security-first, open-source tools for Bitcoin, Lightning, and Nostr.</p>

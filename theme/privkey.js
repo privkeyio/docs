@@ -12,7 +12,9 @@
     a.href = '/';
     a.setAttribute('aria-label', 'PrivKey docs home');
     var img = document.createElement('img');
-    img.src = '__PK_LOGO_URL__';
+    // Relative to the page root so it works whether the site is served at a
+    // domain root (docs.privkey.io) or a subpath (…github.io/docs/).
+    img.src = (window.path_to_root || '') + 'brand-logo.png';
     img.alt = 'PrivKey';
     a.appendChild(img);
     var name = document.createElement('span');
