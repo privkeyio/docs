@@ -17,6 +17,15 @@
       "title": "Readstr",
       "description": "Google Reader-style aggregator for RSS feeds and Nostr long-form content.",
       "icon": "readstr.png"
+    },
+    {
+      "name": "wisp",
+      "repo": "https://github.com/privkeyio/wisp",
+      "ref": "main",
+      "path": ".",
+      "title": "Wisp",
+      "description": "A fast, lightweight Nostr relay written in Zig.",
+      "icon": "wisp.png"
     }
   ]
 }
