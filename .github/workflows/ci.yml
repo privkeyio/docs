@@ -1,0 +1,34 @@
+# PR check: build the portal exactly as deploy.yml does, but do not deploy.
+# Catches a malformed projects.json or a project whose mdBook fails to build
+# before it can reach the live site (deploy.yml runs only on push to main).
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  MDBOOK_VERSION: '0.5.3'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Validate projects.json
+        run: python3 -c "import json; json.load(open('projects.json'))"
+
+      - name: Install mdBook
+        run: |
+          set -euo pipefail
+          url="https://github.com/rust-lang/mdBook/releases/download/v${MDBOOK_VERSION}/mdbook-v${MDBOOK_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+          mkdir -p "$HOME/.local/bin"
+          curl -sSL "$url" | tar -xz -C "$HOME/.local/bin"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Build portal
+        run: python3 build.py
