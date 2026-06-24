@@ -10,6 +10,14 @@
       "icon": "keep.png"
     },
     {
+      "name": "keep-node",
+      "repo": "https://github.com/privkeyio/keep-node",
+      "ref": "main",
+      "path": ".",
+      "title": "Keep Node",
+      "description": "A self-sovereign security appliance for Nostr and Bitcoin key custody."
+    },
+    {
       "name": "readstr",
       "repo": "https://github.com/privkeyio/readstr",
       "ref": "main",
