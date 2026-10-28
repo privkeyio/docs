@@ -15,7 +15,7 @@
       "ref": "main",
       "path": ".",
       "title": "Keep Node",
-      "description": "A self-sovereign security appliance for Nostr and Bitcoin key custody."
+      "description": "A self-sovereign security appliance for your passwords and secrets."
     },
     {
       "name": "readstr",
@@ -23,7 +23,7 @@
       "ref": "main",
       "path": ".",
       "title": "Readstr",
-      "description": "Google Reader-style aggregator for RSS feeds and Nostr long-form content.",
+      "description": "Google Reader-style aggregator for RSS feeds, Nostr long-form content and videos.",
       "icon": "readstr.png"
     },
     {
